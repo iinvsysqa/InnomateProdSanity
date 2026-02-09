@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
@@ -228,7 +228,7 @@ public class DeviceMenuPage extends GenericWrappers{
 	public DeviceMenuPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	// Methods to be used as part of loginpage.
@@ -329,7 +329,7 @@ public class DeviceMenuPage extends GenericWrappers{
 	@SuppressWarnings("deprecation")
 	public void ClickaddrouterButton() throws Exception {
 //		expWaitforPairing(ClickaddrouterButton);
-		WebElement element = driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Add Router\"))"));
+		WebElement element = driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Add Router\"))"));
 		Thread.sleep(2000);
 		element.click();
 //		clickbyXpath(ClickaddrouterButton, " add router button ");
@@ -487,7 +487,7 @@ public class DeviceMenuPage extends GenericWrappers{
 		
 		public void removerouter() {
 
-			driver.findElement(MobileBy.AndroidUIAutomator(
+			driver.findElement(AppiumBy.androidUIAutomator(
 				    "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Router Details\"))"));
 			if (isElementDisplayedCheck(addRouterButton)) {
 				clickbyXpath(addRouterButton, "Add router button ");

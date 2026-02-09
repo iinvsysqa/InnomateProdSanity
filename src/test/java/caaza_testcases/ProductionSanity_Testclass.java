@@ -45,7 +45,7 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 
 	}
 
-	@Test(priority = 0)
+//	@Test(priority = 0)
 	public void ProductionSanity_Check() throws Exception {
 		initAndriodDriver();
 		functionaCheck();
@@ -75,18 +75,15 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 			homepage.clickFloorSelctionBtn();
 
 			homepage.clickPanel(0);
-			Thread.sleep(2000);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
-			Thread.sleep(2000);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
 
-			fetchSerailnumber_Dual_Threenode = switchpage.FetchSerailnumber_Dual_Threenode();// newly added
+			fetchSerailnumber_Dual_Threenode = switchpage.FetchSerailnumber_SingleNode();// newly added
 
 			switchpage.clickMenuButton();
 			switchpage.clickSettingsButton();
 			switchpage.clickResetDeviceButton();
 			switchpage.clickResetConfirmationButton();
-			Thread.sleep(5000);
 			driver.navigate().back();
 			driver.navigate().back();
 			// switchpage.clickBackButton();

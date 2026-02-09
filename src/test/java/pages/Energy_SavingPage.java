@@ -17,7 +17,7 @@ public class Energy_SavingPage extends GenericWrappers{
 	public Energy_SavingPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 		
 	}
 	

@@ -24,7 +24,7 @@ public class Analytics  extends GenericWrappers {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		this.js = (JavascriptExecutor) driver;
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 	
 	JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -87,7 +87,7 @@ public class Analytics  extends GenericWrappers {
 	
 	// --- NEW ROBUST WAIT METHOD ---
     public static String waitForElementToDisplayNumber(WebElement element, int timeoutSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         wait.pollingEvery(Duration.ofMillis(500));
         wait.ignoring(NoSuchElementException.class);
         wait.ignoring(StaleElementReferenceException.class);

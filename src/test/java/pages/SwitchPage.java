@@ -1,5 +1,6 @@
 package pages;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -21,7 +22,7 @@ public class SwitchPage extends GenericWrappers{
 	public SwitchPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	
@@ -90,6 +91,12 @@ public class SwitchPage extends GenericWrappers{
 	private WebElement Switchboard_BackIcon;
 	@FindBy(xpath = "//*[@resource-id='SwitchToggle_1']")
 	private WebElement SwitchToggle;
+	@FindBy(xpath = "//*[@resource-id='SwitchLock_AppTab']")
+	private  WebElement SwitchLock_AppTab;
+	@FindBy(xpath = "//*[@resource-id='AppSwitchLockON_OFF_Switch']")
+	private WebElement AppSwitchLockON_OFF_toggle;
+//	@FindBy(xpath = "//*[@resource-id='']")
+//	private WebElement ;
 //	@FindBy(xpath = "//*[@resource-id='']")
 //	private WebElement ;
 //	@FindBy(xpath = "//*[@resource-id='']")
@@ -133,6 +140,15 @@ public class SwitchPage extends GenericWrappers{
 	public void clickOnOffButton() {
 		if (isElementDisplayedCheck(onOffButton)) {
 		clickbyXpath(onOffButton, "Click On/OFF 1 Button");
+		}
+	}
+	
+	public void checkMissingOnOffToggle() {
+		if(!isElementDisplayedCheck(onOffButton)) {
+			Reporter.reportStep( onOffButton+ " not displayed as expected", "PASS");
+		}else {
+			Reporter.reportStep( onOffButton+ "displayed", "FAIL");
+			
 		}
 	}
 	public void DualnodeclickOnOffButton() {
@@ -229,9 +245,9 @@ public class SwitchPage extends GenericWrappers{
 		
 			clickbyXpath(SwitchToggle, "SwitchToggle");
 	}
-	public void checkforDisconenctedBadge() {
+	public void checkforDisconnectedBadge(String input) {
 		 if(isElementDisplayedCheck(disconnectedIcon)){
-				Reporter.reportStep("Disconnected Badge Displayed", "FAIL");
+				Reporter.reportStep("Disconnected Badge Displayed", "/"+input+"/");
 				
 			}
 	}
@@ -264,31 +280,62 @@ public class SwitchPage extends GenericWrappers{
 		}
 		
 	}
-	public String FetchSerailnumber_Dual_Threenode() {
-		
-		String serialNumber = null;
-		try {
-			List<WebElement> switchElements = driver.findElements(
-					By.xpath("//*[@resource-id[contains(., 'SwitchWrapper_')]]")
-					);
-			
-			System.out.println("Found " + switchElements.size() + " switches:");
-			System.out.println("========================================");
-			
-			for (WebElement element : switchElements) {
-				String resourceId = element.getAttribute("resource-id");
-				
-				// Extract serial number: everything after the LAST underscore
-				 serialNumber = resourceId.substring(resourceId.lastIndexOf("_") + 1);
-				Reporter.reportStep( "Serial Number -"+ serialNumber , "PASS");
-				System.out.println("Serial Number: " + serialNumber);
-			}
-		}catch (Exception e) {
-			System.out.println(e);
-			Reporter.reportStep( "Serial Number not fetched " , "PASS");
-		}
-		return serialNumber;
-		
+//	public String FetchSerailnumber_Dual_Threenode() {
+//		
+//		String serialNumber = null;
+//		try {
+//			List<WebElement> switchElements = driver.findElements(
+//					By.xpath("//*[@resource-id[contains(., 'SwitchWrapper_')]]")
+//					);
+//			
+//			System.out.println("Found " + switchElements.size() + " switches:");
+//			System.out.println("========================================");
+//			
+//			for (WebElement element : switchElements) {
+//				String resourceId = element.getAttribute("resource-id");
+//				
+//				// Extract serial number: everything after the LAST underscore
+//				 serialNumber = resourceId.substring(resourceId.lastIndexOf("_") + 1);
+//				Reporter.reportStep( "Serial Number -"+ serialNumber , "PASS");
+//				System.out.println("Serial Number: " + serialNumber);
+//			}
+//		}catch (Exception e) {
+//			System.out.println(e);
+//			Reporter.reportStep( "Serial Number not fetched " , "PASS");
+//		}
+//		return serialNumber;
+//		
+//	}
+	public String FetchSerailnumber_SingleNode() {
+	    String serialNumber = null;
+	    try {
+	        // Use findElement to stop searching after the first match is found
+	        WebElement firstSwitch = driver.findElement(
+	                By.xpath("//*[contains(@resource-id, 'SwitchWrapper_')]")
+	        );     
+	        	        
+	        String resourceId = firstSwitch.getAttribute("resource-id");
+
+	        if (resourceId != null) {
+	            String rawSerial = resourceId.substring(resourceId.lastIndexOf("_") + 1);
+	            serialNumber = rawSerial.split("-")[0];
+
+	            Reporter.reportStep("Fetched Single Serial Number: " + serialNumber, "PASS");
+	            System.out.println("Serial Number: " + serialNumber);
+	        }
+
+	        
+	    } catch (Exception e) {
+	        System.out.println("Could not find SwitchWrapper: " + e.getMessage());
+	        Reporter.reportStep("Serial Number not fetched", "FAIL");
+	    }
+	    return serialNumber;
+	}
+	public   void clickAppswitchtab() {
+		clickbyXpath(SwitchLock_AppTab, "switchlock App tab page");
+	}
+	public   void clickAppSwitchlockToggle() {
+		clickbyXpath(AppSwitchLockON_OFF_toggle, "Appswitchlock On/off toggle");
 	}
 }
 

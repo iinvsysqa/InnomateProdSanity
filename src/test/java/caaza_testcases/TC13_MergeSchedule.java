@@ -20,10 +20,11 @@ import pages.Schedulartestpage;
 import pages.SettingsPage;
 import pages.SignUpPage;
 import pages.StoreLogPage;
+import pages.SwitchPage;
 import utils.logReadandWrite;
 import wrappers.MobileAppWrappers;
 
-public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
+public class TC13_MergeSchedule extends MobileAppWrappers{
 	LandingPage landingpage;
 	SignUpPage signuppage;
 	HomePage homepage;
@@ -35,7 +36,7 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 	AddDevicePage adddevicepage;
 	HierarchyPage hierarchypage;
 	Profilepage profilepage;
-	
+	SwitchPage switchpage;
 
 	@BeforeClass
 	public void startTestCase() {
@@ -45,7 +46,7 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 	}
 
 	
-//	@Test(priority = 11)
+	@Test(priority = 10)
 	public void TC05_MultipleSchedule_Timer() throws Exception {
 		initAndriodDriver();
 		landingPageCheck();
@@ -63,6 +64,7 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 		adddevicepage = new AddDevicePage(driver);
 		hierarchypage = new HierarchyPage(driver);
 		profilepage = new Profilepage(driver);
+		switchpage = new SwitchPage(driver);
 		
 		logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
 		String switches = loadProp("SWITCHES_NAMES"); // returns "Switch1,Switch2,Switch3,Switch4" 
@@ -74,6 +76,9 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 		try {
 			readwrite.openPort();
 			
+			
+			//to do:Merge schedule , check energy status 
+//			,disable and enable internet to check connectivity
 			uninstall_reinstall();
 			landingpage.clickLandingPageNextBtn();			
 			landingpage.clickSignUpLink();
@@ -86,6 +91,7 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 			signuppage.enteranswer1("demo");
 			signuppage.enteranswer2("demo");
 			signuppage.clickSignUpButton();
+			
 			hierarchypage.enterHierarchyText(1, Hierarchyname);
 			hierarchypage.clickCreateHierarchybtn();
 			hierarchypage.addHierarchy_oneOption();
@@ -95,43 +101,33 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 			homepage.enterFirstcard();
 			adddevicepage.pair(2);
 			adddevicepage.EnterNode(switchNames);			
-		
+			homepage.navigateback();
+			
 			homepage.enterFirstcard();
 			homepage.clickPanel(0);
+			toggleNetwork(false);
+			Thread.sleep(5000);
+			toggleNetwork(true);
+			Thread.sleep(3000);
 			
 			
+			switchpage.clickOnOffButton();
+			Thread.sleep(60000*1);
+			switchpage.clickOnOffButton();
+			schedular.enter_Switchpage(1);
 			
-			
-			//navigate to settings energy monitor page and enable it 
-			//navigate to switch page and check for periodic values 
-			//disable energy monitor page  and check switch page periodic value
-			
-			settingspage.openMenuPage();
-			settingspage.navigateSettingspage();
-			
-			
-//			schedular.enter_Switchpage(1);
-//			analytics.getenergydurationvalue();
-//			homepage.navigateback();
-//			schedular.createSchedules(1, 2, 1, 1,"NewSchedule");//mention switches count ,mention the time to start ,how many schedules need to keep,schedule duration like 1 min or 2 min
-//			Thread.sleep(60000*3);
-//			schedular.enter_Switchpage(1);
-//			analytics.checkenrgyduration(1);
-//			schedular.deleteschedule();
-//			homepage.navigateback();
-//			/////////////////
-//			//for timer
-//			
-//			homepage.enterFirstcard();
-//			schedular.enter_Switchpage(1);//1 switch
-//			analytics.getenergydurationvalue();
-//			homepage.navigateback();
-//			schedular.SetTimerForSwitches(1);//1 minute
-//			Thread.sleep(60000*1);
-//			
-//			schedular.enter_Switchpage(1);//1 switch
-//			analytics.checkenrgyduration(1);
+			analytics.getenergydurationvalue();
 			homepage.navigateback();
+			schedular.createSchedules(1, 3, 2, 2,"NewSchedule");//mention switches count ,mention the time to start ,how many schedules need to keep,schedule duration like 1 min or 2 min
+			
+			Thread.sleep(60000*6);
+			schedular.enter_Switchpage(1);
+			analytics.checkenrgyduration(4);
+			schedular.deleteschedule();
+			homepage.navigateback();
+			
+			
+			
 			settingspage.openMenuPage();
 			settingspage.navigateSettingspage();
 			settingspage.resetDevice();
@@ -150,7 +146,7 @@ public class TC12_EnableEnergyMonitoring extends MobileAppWrappers{
 			profilepage.checkSignInButton();
 			readwrite.closePort();
 		}
-		catch (Exception e) {	
+		catch (Exception e) {	 
 			readwrite.closePort();
 			logpage.CollectLogOnFailure(testCaseName,testDescription);
 			fail(e);

@@ -33,7 +33,7 @@ public class Internal_longrun_task extends GenericWrappers{
 	public Internal_longrun_task(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver,10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 

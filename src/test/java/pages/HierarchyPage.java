@@ -1,5 +1,7 @@
 package pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +18,7 @@ public class HierarchyPage  extends GenericWrappers{
 	public HierarchyPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 	@FindBy(xpath = "//*[@resource-id='Create HierarchyButton']")
 	private WebElement createHierarchyBtn;
@@ -68,8 +70,8 @@ public class HierarchyPage  extends GenericWrappers{
 			clickbyXpath(createHierarchyBtn, "Create Hierarchy Button");
 			
 		}
-		public void addHierarchy_oneOption() {
-			
+		public void addHierarchy_oneOption() throws InterruptedException {
+				Thread.sleep(2000);
 			   clickbyXpath(hierarchyAddButton, "Level 1 Add button ");
 			   entervaluebyXpath(hierarchyAddInput, "Level 1 Input", "Apartment");
 			   clickbyXpath(hierarchyAddCategoryDropdown,"Select room type drop down");

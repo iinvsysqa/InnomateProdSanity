@@ -34,7 +34,7 @@ public class Schedulartestpage extends GenericWrappers {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		this.js = (JavascriptExecutor) driver;
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	JavascriptExecutor js = (JavascriptExecutor) driver;

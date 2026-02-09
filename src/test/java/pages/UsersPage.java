@@ -1,5 +1,7 @@
 package pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +19,7 @@ public class UsersPage extends GenericWrappers {
 	public UsersPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	@FindBy(xpath = "//*[@resource-id='UsersCountContainer']")
@@ -40,7 +42,7 @@ public class UsersPage extends GenericWrappers {
 	private WebElement SharePageSendButton;
 	@FindBy(xpath = "//*[@resource-id='ThemedButton_Continue']")
 	private WebElement SharePageContinueButton;
-	@FindBy(xpath = "//*[@resource-id='HierarchyTextContainer']")
+	@FindBy(xpath = "//*[@resource-id='EnableScreenSharingCard']")
 	private WebElement OtherUsersHierarchy;
 	@FindBy(xpath = "//*[@resource-id='SharedScreen_MainUser']")
 	private WebElement MainUser;

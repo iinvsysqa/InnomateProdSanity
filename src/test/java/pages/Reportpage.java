@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import wrappers.MobileAppWrappers;
 
@@ -134,7 +134,7 @@ public class Reportpage extends MobileAppWrappers {
 		}
 		public void scrollpage() {
 
-			driver.findElement(MobileBy.AndroidUIAutomator(
+			driver.findElement(AppiumBy.androidUIAutomator(
 				    "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"+\"));"));
 			driver.findElement(By.xpath("//*[@resource-id='Report_UploadScreenshot_plus']"))
 		    .click();

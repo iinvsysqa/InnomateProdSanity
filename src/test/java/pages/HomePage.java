@@ -148,7 +148,7 @@ JavascriptExecutor js = (JavascriptExecutor) driver;
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		this.js = (JavascriptExecutor) driver;
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	public void clickFloorSelctionBtn() {

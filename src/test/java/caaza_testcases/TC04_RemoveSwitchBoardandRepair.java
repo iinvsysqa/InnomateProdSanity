@@ -45,7 +45,8 @@ public class TC04_RemoveSwitchBoardandRepair extends MobileAppWrappers {
 	
 	
 	logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
-	List<String> switchNames = Arrays.asList(loadProp("SWITCHES_NAMES"));
+	String switches = loadProp("SWITCHES_NAMES"); // returns "Switch1,Switch2,Switch3,Switch4" 
+	List<String> switchNames = Arrays.asList(switches.split(","));
 	String Hierarchyname="apartment";
 	String Oldpassword =loadProp("PASSWORD");
 	String GeneratedPassword=updateProperty("PASSWORD", randomCharacters(3, 1)+randomCharacters(2, 2)+randomCharacters(3, 3)+randomCharacters(2, 4));
@@ -84,9 +85,6 @@ public class TC04_RemoveSwitchBoardandRepair extends MobileAppWrappers {
 			signuppage.enteranswer1("demo");
 			signuppage.enteranswer2("demo");
 			signuppage.clickSignUpButton();
-			killAndReopenApp();
-			hierarchypage.clickStartaNewHomeButton();
-			hierarchypage.clickStartanewhometext();
 			hierarchypage.enterHierarchyText(1, Hierarchyname);
 			hierarchypage.clickCreateHierarchybtn();
 			hierarchypage.addHierarchy_oneOption();

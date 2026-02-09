@@ -68,7 +68,8 @@ public class TC06_SceneCreation extends MobileAppWrappers{
 		switchpage = new SwitchPage(driver);
 		
 		logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
-		List<String> switchNames = Arrays.asList(loadProp("SWITCHES_NAMES"));
+		String switches = loadProp("SWITCHES_NAMES"); // returns "Switch1,Switch2,Switch3,Switch4" 
+		List<String> switchNames = Arrays.asList(switches.split(","));
 		String Hierarchyname="apartment";
 		String Oldpassword =loadProp("PASSWORD");
 		String GeneratedPassword=updateProperty("PASSWORD", randomCharacters(3, 1)+randomCharacters(2, 2)+randomCharacters(3, 3)+randomCharacters(2, 4));
@@ -87,18 +88,24 @@ public class TC06_SceneCreation extends MobileAppWrappers{
 			signuppage.enteranswer1("demo");
 			signuppage.enteranswer2("demo");
 			signuppage.clickSignUpButton();
-			killAndReopenApp();
-			hierarchypage.clickStartaNewHomeButton();
-			hierarchypage.clickStartanewhometext();
+			
 			hierarchypage.enterHierarchyText(1, Hierarchyname);
 			hierarchypage.clickCreateHierarchybtn();
 			hierarchypage.addHierarchy_oneOption();
 			
 			
-			
+//			BCDCC BCCCC BDBBD
 			homepage.enterFirstcard();
 			adddevicepage.pair(2);
 			adddevicepage.EnterNode(switchNames);
+			homepage.navigateback();
+			
+			homepage.enterFirstcard();
+			homepage.clickPanel(0);
+			schedular.enter_Switchpage(1);
+			analytics.getenergydurationvalue();
+			homepage.navigateback();
+			homepage.navigateback();
 			homepage.navigateback();
 			
 			scenecreation.navigateScenecreationpage();
@@ -113,6 +120,15 @@ public class TC06_SceneCreation extends MobileAppWrappers{
 //			scenecreation.checkSceneCreation_successToast("Scene Created Successfully");
 			scenecreation.clickAllSceneStartButtons();
 			
+			
+//			check scene by analytics page
+			homepage.enterFirstcard();
+			homepage.clickPanel(0);
+			schedular.enter_Switchpage(1);
+			analytics.checkenrgyduration(1);
+			homepage.navigateback();
+			homepage.navigateback();
+			homepage.navigateback();
 			
 			
 			//edit switchboardname

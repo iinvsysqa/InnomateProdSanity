@@ -25,7 +25,7 @@ public class SettingsPage extends GenericWrappers{
 	public SettingsPage(AndroidDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		this.wait=new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 		adddevicepage = new AddDevicePage(driver);
 	}
 
@@ -65,8 +65,6 @@ public class SettingsPage extends GenericWrappers{
 	private WebElement SettingsItem_LowVoltageCuttoff;
 	@FindBy(xpath = "//*[@resource-id='SettingsItem_TimeZoneConfiguration']")
 	private WebElement SettingsItem_TimeZoneConfiguration;
-	@FindBy(xpath = "//*[@resource-id='SettingsItem_EnergyMonitor']")
-	private WebElement SettingsItem_EnergyMonitor;
 	@FindBy(xpath = "//*[@resource-id='SettingsItem_ResetDevice']")
 	private WebElement SettingsItem_ResetDevice;
 	@FindBy(xpath = "//*[@resource-id='SettingsItem_ModifyRouter']")
@@ -113,6 +111,12 @@ public class SettingsPage extends GenericWrappers{
 	private WebElement Header_Back_Button;
 	@FindBy(xpath = "//*[@resource-id='BackIcon_Component_Button']")
 	private WebElement Profile_Back_Button;
+	@FindBy(xpath = "//*[@resource-id='SettingsItem_EnergyMonitor']")
+	private WebElement SettingsItem_EnergyMonitor;
+	@FindBy(xpath = "//android.widget.ScrollView[@content-desc=\"com.CaaZa_Smart:id/SettingsScreen_ScrollView\"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup")
+	private WebElement EnergymonitorToggle;
+	@FindBy(xpath = "//*[@resource-id='routerListIcon']")
+	private WebElement RouterConfiguration;
 
 	
 	
@@ -229,7 +233,7 @@ public class SettingsPage extends GenericWrappers{
 	}
 	public boolean verifyCouldntConnectPopup() throws InterruptedException {
 
-        WebDriverWait wait = new WebDriverWait(driver,60);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(60));
         wait.pollingEvery(Duration.ofMillis(500));
         wait.ignoring(NoSuchElementException.class);
         wait.ignoring(StaleElementReferenceException.class);
@@ -249,7 +253,7 @@ public class SettingsPage extends GenericWrappers{
 		clickbyXpath(CouldntConnectrouter_OKPopUp, "Couldnt connect router OK pop-up");
 	}
 	public boolean verifyCredentialsToast() {
-		 WebDriverWait wait = new WebDriverWait(driver,60);
+		 WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(60));
 	        wait.pollingEvery(Duration.ofMillis(500));
 	        wait.ignoring(NoSuchElementException.class);
 	        wait.ignoring(StaleElementReferenceException.class);
@@ -266,6 +270,17 @@ public class SettingsPage extends GenericWrappers{
 	}
 	public void navigateswitchmenuSettingspage() {
 		clickbyXpath(switchpagemenu_settingsButton, "switchmenusettingsbutton");
+	}
+	
+	public void navigateEnergyMonitorpage() {
+		clickbyXpath(SettingsItem_EnergyMonitor,"Energy Monitor button" );
+	}
+	
+	public void clickEnergyMonitorToggle() {
+		clickbyXpath(EnergymonitorToggle, "Energy Monitor Toggle");
+	}
+	public void clickRouterConfiguration() {
+		clickbyXpath(RouterConfiguration, "Router configuration");
 	}
 }
 

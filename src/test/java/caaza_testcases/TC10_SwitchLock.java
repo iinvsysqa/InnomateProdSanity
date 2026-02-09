@@ -5,9 +5,6 @@ import org.testng.annotations.BeforeClass;
 import java.util.Arrays;
 import java.util.List;
 
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import pages.AddDevicePage;
 import pages.Analytics;
 import pages.HierarchyPage;
@@ -75,7 +72,8 @@ public class TC10_SwitchLock  extends MobileAppWrappers{
 		notificationpage=new NotificationPage(driver);
 		
 		logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
-		List<String> switchNames = Arrays.asList(loadProp("SWITCHES_NAMES"));
+		String switches = loadProp("SWITCHES_NAMES"); // returns "Switch1,Switch2,Switch3,Switch4" 
+		List<String> switchNames = Arrays.asList(switches.split(","));
 		String Hierarchyname="apartment";
 		String Oldpassword =loadProp("PASSWORD");
 		String GeneratedPassword=updateProperty("PASSWORD", randomCharacters(3, 1)+randomCharacters(2, 2)+randomCharacters(3, 3)+randomCharacters(2, 4));
@@ -102,9 +100,6 @@ public class TC10_SwitchLock  extends MobileAppWrappers{
 			signuppage.enteranswer2("demo");
 			signuppage.clickSignUpButton();
 			Thread.sleep(3000);
-			killAndReopenApp();
-			hierarchypage.clickStartaNewHomeButton();
-			hierarchypage.clickStartanewhometext();
 			hierarchypage.enterHierarchyText(1, Hierarchyname);
 			hierarchypage.clickCreateHierarchybtn();
 			hierarchypage.addHierarchy_oneOption();
@@ -128,9 +123,16 @@ public class TC10_SwitchLock  extends MobileAppWrappers{
 			
 			schedular.clickSwitchMenuButton();
 			schedular.clickSwitchLockButton();
-			schedular.clickSwitchlockToggle();
+			switchpage.clickAppswitchtab();
+			switchpage.clickAppSwitchlockToggle();
 			schedular.clickSwitchsaveBtn();
-			schedular.verifyLockicon();
+			verifyAndSaveLogs("App switch lock enabled successfully");
+			schedular.clickSwitchMenuButton();
+			schedular.clickSwitchLockButton();
+			switchpage.clickAppswitchtab();
+			switchpage.clickAppSwitchlockToggle();
+			schedular.clickSwitchsaveBtn();
+			verifyAndSaveLogs("App switch lock disabled successfully");
 			userpage.navigateBack();
 			userpage.navigateBack();
 			userpage.navigateBack();

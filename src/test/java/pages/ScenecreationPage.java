@@ -1,5 +1,6 @@
 package pages;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -22,13 +23,15 @@ public class ScenecreationPage extends GenericWrappers {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		this.js = (JavascriptExecutor) driver;
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	
 	JavascriptExecutor js = (JavascriptExecutor) driver;
-	@FindBy(xpath = "//*[@resource-id='AddNewScene_Icon']")
+	@FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"com.CaaZa_Smart:id/ProfileImageContainer, com.CaaZa_Smart:id/HierarchyTextContainer, com.CaaZa_Smart:id/SCH_ADD_PLUS_ICON\"]")
 	private WebElement ScenePlusbtn	;
+	@FindBy(xpath = "//*[@resource-id='AddNewScene_Icon']")
+	private WebElement ScenePlusIcon	;
 	@FindBy(xpath = "//*[@resource-id='sceneNameInput']")
 	private WebElement sceneNametextbox;
 	@FindBy(xpath = "//*[@resource-id='create_Scene_HeaderTitle']")
@@ -68,8 +71,12 @@ public class ScenecreationPage extends GenericWrappers {
 	}
 	
 	public void navigateScenecreationpage() {
-		
+		if(isElementDisplayedCheck(ScenePlusbtn)) {
 		clickbyXpath(ScenePlusbtn, "SceneCreationBtn");
+		}else {
+			clickbyXpath(ScenePlusIcon, "SceneCreationBtn");
+			
+		}
 	}
 	public void enterSceneName(String sceneName) throws InterruptedException {
 		if(isElementDisplayedCheck(sceneNametextbox)) {
@@ -133,19 +140,20 @@ public class ScenecreationPage extends GenericWrappers {
 	    // Iterate through each card
 	    for (WebElement card : sceneCards) {
 	        try {
-	            // Locate the "Start" button within the card using content-desc
+	            // Use double quotes for the text to handle the apostrophe in "Let's Start"
 	            WebElement startButton = card.findElement(
-	                By.xpath(".//android.widget.TextView[contains(@content-desc, 'SceneName_') and @text='Let’s Start']")
+	                By.xpath(".//android.widget.TextView[contains(@content-desc, 'SceneName_') and @text=\"Let's Start\"]")
 	            );
 
 	            if (startButton.isDisplayed()) {
 	                System.out.println("Clicking on: " + startButton.getAttribute("content-desc"));
-	                clickbyXpath(startButton, "start button");
-//	                checkSceneTriggered_successToast("Scene triggered successfully");
-	                Thread.sleep(3000);
+	                // Ensure your clickbyXpath method accepts a WebElement or use standard click
+	                startButton.click(); 
+	                Thread.sleep(60000);
 	            }
 	        } catch (Exception e) {
-	            System.out.println("No Start button found in one of the cards or already clicked.");
+	            // It's helpful to print the actual error while debugging
+	            System.out.println("Button not found in this card. Error: " + e.getMessage());
 	        }
 	    }
 	}

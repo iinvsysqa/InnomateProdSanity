@@ -27,7 +27,7 @@ import org.python.core.exceptions;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.appmanagement.ApplicationState;
 import utils.PassSTComment;
@@ -37,7 +37,7 @@ import wrappers.GenericWrappers;
 
 public class AddDevicePage extends GenericWrappers {
 
-	public static AndroidDriver<WebElement> driver;
+	public static AndroidDriver driver;
 
 	
 	public String userName = loadProp("USERNAME");
@@ -61,11 +61,9 @@ public class AddDevicePage extends GenericWrappers {
 
 	@FindBy(xpath = "//*[@resource-id='Pairing_mode_Checkbox']")
 	private WebElement checkBoxPairing;
-
 	@FindBy(xpath = "//*[@resource-id='Pairing_mode_ButtonText']")
 	private WebElement nextButtonPairing;
 
-	
 
 	@FindBy(xpath = "//*[@resource-id='com.android.permissioncontroller:id/permission_allow_foreground_only_button']")
 	private WebElement locationPopUp;
@@ -76,10 +74,10 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "//android.widget.EditText[@text='Enter Password']")
 	private WebElement enterPasswordField;
 
-	@FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"CANCEL\"]")
+	@FindBy(xpath = "//*[@content-desc=\"CANCEL\"]")
 	private WebElement cancelButton;
 
-	@FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"Submit\"]")
+	@FindBy(xpath = "//*[@content-desc=\"Submit\"]")
 	private WebElement enterButton;
 
 	@FindBy(xpath = "//android.widget.TextView[@text='CANCEL']")
@@ -305,12 +303,12 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "//android.widget.EditText[@text=\"Enter name of your smart panel\"]")
 	private WebElement panelNameTextBox;
 	
-	@FindBy(xpath = "//*[@resource-id='AddSwitch_SaveButton']")
+	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='AddSwitch_SaveButton']")
 	private WebElement addSwitchSaveBtn;
 	
-	
-	@FindBy(xpath = "(//android.widget.TextView[@text=\"Save\"])[2]")
+	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='Single_Button']")
 	private WebElement panelNameSaveBtn;
+//	@FindBy(xpath = "(//android.widget.TextView[@text=\"Save\"])[2]")
 	
 	@FindBy(xpath = "//android.widget.EditText[@text=\"Enter Switch Name\"]")
 	private WebElement switchNameTextBox;
@@ -353,7 +351,7 @@ public class AddDevicePage extends GenericWrappers {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		this.js = (JavascriptExecutor) driver;
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 
 	}
 
@@ -435,7 +433,7 @@ public class AddDevicePage extends GenericWrappers {
 	}
 	
 	  public boolean waitForVerificationComplete() {
-	        WebDriverWait wait = new WebDriverWait(driver,60);
+	        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(60));
 	        wait.pollingEvery(Duration.ofMillis(500));
 	        wait.ignoring(NoSuchElementException.class);
 	        wait.ignoring(StaleElementReferenceException.class);
@@ -737,7 +735,7 @@ public class AddDevicePage extends GenericWrappers {
 		passcommand = new PassSTComment();
 		
 		//verifysigninpage();
-		homepage.WifiSwitch(loadProp("WIFINAME"), loadProp("WIFIPASSWORD"));
+//		homepage.WifiSwitch(loadProp("WIFINAME"), loadProp("WIFIPASSWORD"));
 		initiatepairing(mode);
 	}
 
@@ -799,7 +797,7 @@ public class AddDevicePage extends GenericWrappers {
 	public void proceedToAddDevice(int mode) throws Exception {
 		
 
-		if (isElementDisplayedCheck(addSwitchBoard)) {
+//		if (isElementDisplayedCheck(addSwitchBoard)) {
 
 			clickAddSwitchBoardButton();
 			checkBoxPairing();
@@ -866,11 +864,11 @@ public class AddDevicePage extends GenericWrappers {
 				blepermissionokpopup();
 				
 //				Thread.sleep(30000);
-				
-				if(!isElementDisplayedCheck(sZephyrInfoNextButton)) {
-					unregistereddevicepopup();
-					retrypagecheck(mode);
-				}
+//				
+//				if(!isElementDisplayedCheck(sZephyrInfoNextButton)) {
+//					unregistereddevicepopup();
+//					retrypagecheck(mode);
+//				}
 //				blepermissionokpopup();
 				
 				break;
@@ -965,31 +963,31 @@ public class AddDevicePage extends GenericWrappers {
 			}
 			
 
-		} else {
-
-			System.out.println("Device is already in paired state removing the device");
-			blepermissionokpopup();
-
-			devicemenupage.clickMenuBarRemoveDevice();
-			devicemenupage.clickRemoveDevicePopupYesButton();
-			Thread.sleep(2000);//or5000
-			if (isElementDisplayedCheck(deviceofflinealertTitle)) {
-				String text = deviceofflinealertTitle.getText();
-				System.out.println(text + "  Alert pop-up displayed");
-				clickbyXpath(alertok, "Alert ok button");
-				proceedToAddDevice(mode);
-
-			} else if (isElementDisplayedCheck(buttonPressAlert)) {
-				String text = buttonPressAlert.getText();
-				System.out.println(text + "  Alert pop-up displayed");
-				clickbyXpath(alertok, "Alert ok button");
-				proceedToAddDevice(mode);
-
-			} else {
-
-				proceedToAddDevice(mode);
-			}
-		}
+//		} else {
+//
+//			System.out.println("Device is already in paired state removing the device");
+//			blepermissionokpopup();
+//
+//			devicemenupage.clickMenuBarRemoveDevice();
+//			devicemenupage.clickRemoveDevicePopupYesButton();
+//			Thread.sleep(2000);//or5000
+//			if (isElementDisplayedCheck(deviceofflinealertTitle)) {
+//				String text = deviceofflinealertTitle.getText();
+//				System.out.println(text + "  Alert pop-up displayed");
+//				clickbyXpath(alertok, "Alert ok button");
+//				proceedToAddDevice(mode);
+//
+//			} else if (isElementDisplayedCheck(buttonPressAlert)) {
+//				String text = buttonPressAlert.getText();
+//				System.out.println(text + "  Alert pop-up displayed");
+//				clickbyXpath(alertok, "Alert ok button");
+//				proceedToAddDevice(mode);
+//
+//			} else {
+//
+//				proceedToAddDevice(mode);
+//			}
+//		}
 	}
 
 	
@@ -1002,7 +1000,7 @@ public class AddDevicePage extends GenericWrappers {
 			Runtime.getRuntime().exec("adb shell am start -a android.settings.WIFI_SETTINGS");
 
 			Thread.sleep(3000);
-			WebElement element = driver.findElement(MobileBy.AndroidUIAutomator(
+			WebElement element = driver.findElement(AppiumBy.androidUIAutomator(
 					"new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains(\""
 							+ serialno + "\"))"));
 			wait.until(ExpectedConditions.visibilityOf(element));
@@ -1223,7 +1221,7 @@ public int enterNamesForSwitches(List<String> switchNames) {
     for (int i = 0; i < switchTextboxes.size(); i++) {
     	
         WebElement switchTextBox = switchTextboxes.get(i);
-        switchTextBox.clear(); // Clear existing text if any
+//        switchTextBox.clear(); // Clear existing text if any
         entervaluebyXpath(switchTextBox,"Switch textbox" ,switchNames.get(i) );
         clickSwitchTypeDropdown();
         clickFanType();

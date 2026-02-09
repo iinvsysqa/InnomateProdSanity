@@ -72,7 +72,8 @@ public class TC09_Multiuser  extends MobileAppWrappers{
 		userpage = new UsersPage(driver);
 		
 		logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
-		List<String> switchNames = Arrays.asList(loadProp("SWITCHES_NAMES"));
+		String switches = loadProp("SWITCHES_NAMES"); // returns "Switch1,Switch2,Switch3,Switch4" 
+		List<String> switchNames = Arrays.asList(switches.split(","));
 		String Hierarchyname="apartment";
 		String Oldpassword =loadProp("PASSWORD");
 		String GeneratedPassword=updateProperty("PASSWORD", randomCharacters(3, 1)+randomCharacters(2, 2)+randomCharacters(3, 3)+randomCharacters(2, 4));
@@ -98,9 +99,6 @@ public class TC09_Multiuser  extends MobileAppWrappers{
 			signuppage.enteranswer2("demo");
 			signuppage.clickSignUpButton();
 			Thread.sleep(3000);
-			killAndReopenApp();
-			hierarchypage.clickStartaNewHomeButton();
-			hierarchypage.clickStartanewhometext();
 			hierarchypage.enterHierarchyText(1, Hierarchyname);
 			hierarchypage.clickCreateHierarchybtn();
 			hierarchypage.addHierarchy_oneOption();
@@ -153,7 +151,7 @@ public class TC09_Multiuser  extends MobileAppWrappers{
 			
 			//turn on app for 1 min
 			Thread.sleep(5000);
-			switchpage.checkforDisconenctedBadge();
+			switchpage.checkforDisconnectedBadge("FAIL");
 			switchpage.clickSwitchToggle();
 			Thread.sleep(60000);
 			switchpage.clickSwitchToggle();
@@ -227,7 +225,7 @@ public class TC09_Multiuser  extends MobileAppWrappers{
 			
 			//turn on app for 1 min
 			Thread.sleep(5000);
-			switchpage.checkforDisconenctedBadge();
+			switchpage.checkforDisconnectedBadge("FAIL");
 			switchpage.clickSwitchToggle();
 			Thread.sleep(60000);
 			switchpage.clickSwitchToggle();
@@ -279,7 +277,7 @@ public class TC09_Multiuser  extends MobileAppWrappers{
 			homepage.enterFirstcard();
 			homepage.clickPanel(0);
 			Thread.sleep(5000);
-			switchpage.checkforDisconenctedBadge();
+			switchpage.checkforDisconnectedBadge("FAIL");
 			switchpage.clickSwitchToggle();
 //			userpage.checkViewonlyAccesson_off_Toast();
 			switchpage.NavigatetoSwitches(1);
