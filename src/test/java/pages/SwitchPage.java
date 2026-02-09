@@ -338,4 +338,3 @@ public class SwitchPage extends GenericWrappers{
 		clickbyXpath(AppSwitchLockON_OFF_toggle, "Appswitchlock On/off toggle");
 	}
 }
-

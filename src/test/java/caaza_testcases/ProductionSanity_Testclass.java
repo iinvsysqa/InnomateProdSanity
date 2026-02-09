@@ -75,6 +75,7 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 			homepage.clickFloorSelctionBtn();
 
 			homepage.clickPanel(0);
+			Thread.sleep(2000);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
 
