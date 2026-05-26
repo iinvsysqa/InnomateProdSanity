@@ -119,6 +119,17 @@ public class HomePage extends GenericWrappers{
 	private WebElement switchespagetwo;
 	@FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"Panel1, 1 Switch\"]")
 	private WebElement switchespageone;
+	
+	@FindBy(xpath = "//*[@resource-id='Header_UnlinkedDevice_Button']")
+	private WebElement unLinkDeviceButton;
+	
+	@FindBy(xpath = "//*[@resource-id='DashBoard_AddNewDevice_Button']")
+	private WebElement startPairingButton;
+	
+	@FindBy(xpath = "//*[@resource-id='Tab_Apartment_Icon']")
+	private WebElement apartmentIcon;
+	
+	
 	private WebElement devicenameDeviceSettingsPage(String username) {
 		return driver.findElement(By.xpath("//android.widget.TextView[@text='"+username+"']"));
 		
@@ -154,6 +165,19 @@ JavascriptExecutor js = (JavascriptExecutor) driver;
 	public void clickFloorSelctionBtn() {
 		clickbyXpath(floorSelectionButton, "Floor selction button");
 	}
+	
+	public void clickStartPairingButton() {
+		clickbyXpath(startPairingButton, " Click Start Pairings button");
+	}
+	
+	public void clickApartmentIcon() {
+		clickbyXpath(apartmentIcon, " Click apartment icon");
+	}
+	
+	public void clickUnlikDeviceButton() {
+		clickbyXpath(unLinkDeviceButton, " Click Link Device button");
+	}
+	
 	public void clickPanel(int panel) {
 		if(isiconDisplayed(Panel(panel), "panel page")) {
 		clickbyXpath(Panel(panel), "Panel");

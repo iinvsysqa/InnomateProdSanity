@@ -79,6 +79,9 @@ public class AddDevicePage extends GenericWrappers {
 
 	@FindBy(xpath = "//*[@content-desc=\"Submit\"]")
 	private WebElement enterButton;
+	
+	@FindBy(xpath = "//*[@resource-id='DoubleButInpCheckIcon_Button2']")
+	private WebElement PairingSubmitButton;
 
 	@FindBy(xpath = "//android.widget.TextView[@text='CANCEL']")
 	private WebElement routerCancelButton;
@@ -303,6 +306,9 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "//android.widget.EditText[@text=\"Enter name of your smart panel\"]")
 	private WebElement panelNameTextBox;
 	
+	@FindBy(xpath = "//*[@resource-id='DoubleButInpTitleDesc_Input']")
+	private WebElement panelNameTxtBox;
+	
 	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='AddSwitch_SaveButton']")
 	private WebElement addSwitchSaveBtn;
 	
@@ -324,8 +330,10 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "(//android.widget.TextView[@text=\"Select the field\"])[1]")
 	private WebElement switchType1DropdownBtn;
 	
-	@FindBy(xpath = "//android.widget.TextView[@text=\"fan\"]")
+	//@FindBy(xpath = "//android.widget.TextView[@text=\"Washingmachine\"]")
+	@FindBy(xpath = "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]")
 	private WebElement switchTypeFanButton;
+	
 	@FindBy(xpath = "//android.widget.TextView[@text=\"fridge\"]")
 	private WebElement switchTypeFridgeButton;
 	
@@ -363,6 +371,10 @@ public class AddDevicePage extends GenericWrappers {
 		clickbyXpath(addSwitchBoard, " Click Add switch board Button ");
 	}
 	
+	public void clickPairingSubmitButton() {
+		clickbyXpath(PairingSubmitButton, " Click on Submit Button ");
+	}
+	
 	public void clickSwitchTypeDropdown() {
 		clickbyXpath(switchTypeDropdownBtn, " Click switch type Drop down ");
 	}
@@ -394,6 +406,13 @@ public class AddDevicePage extends GenericWrappers {
 		entervaluebyXpath(panelNameTextBox, " Panel Name ", panelname);
 		hidekeyboard();
 	}
+	
+	public void enterPanelNameNew(String panelname) {
+		entervaluebyXpath(panelNameTxtBox, " Panel Name ", panelname);
+		hidekeyboard();
+	}
+	
+	
 
 	public void enterSwitchName(String switchname) {
 		entervaluebyXpath(switchNameTextBox, " Switch Name ", switchname);
@@ -440,7 +459,8 @@ public class AddDevicePage extends GenericWrappers {
 
 	        try {
 	            // Option A: wait until next-screen element is visible (preferred)
-	        	WebElement until = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.EditText[@text=\"Enter name of your smart panel\"]")));
+	        	//WebElement until = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.EditText[@text=\"Enter name of your smart panel\"]")));
+	        	WebElement until = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Add Device\"]")));
 	        	if (isElementDisplayedCheck(until)) {
 					System.out.println("Enter your panel name -placeholder displayed");
 				}else if (isElementDisplayedCheck(RetryButton)) {
@@ -799,7 +819,7 @@ public class AddDevicePage extends GenericWrappers {
 
 //		if (isElementDisplayedCheck(addSwitchBoard)) {
 
-			clickAddSwitchBoardButton();
+			//clickAddSwitchBoardButton();
 			checkBoxPairing();
 			nextButtonPairing();
 
@@ -835,7 +855,7 @@ public class AddDevicePage extends GenericWrappers {
 				//blepermissionokpopup();
 				enterWiFiPassword(wifiPassword);
 			//	Thread.sleep(10000);
-				clickEnterButton();
+				clickPairingSubmitButton();
 				//Thread.sleep(10000);
 				/*if(!isElementDisplayedCheck(sZephyrInfoNextButton))  {
 					blepermissionokpopup();
@@ -1189,7 +1209,7 @@ public void TurnOffmobiledata() throws Exception {
 public int  EnterNode(List<String> switchNames) throws InterruptedException {
 	
 	waitForVerificationComplete();
-	enterPanelName("Panel1");
+	enterPanelNameNew("Panel1");
 	clickbyXpath(panelNameSaveBtn, "PanelNamesave");
 	//singlenode-1switch
 //		 enterSwitchName("Switch1");
@@ -1207,7 +1227,7 @@ public List<WebElement> getSwitchTextboxes() {
     return driver.findElements(By.xpath("//android.widget.EditText[@text='Enter Switch Name']"));
 }
 
-public int enterNamesForSwitches(List<String> switchNames) {
+public int enterNamesForSwitches(List<String> switchNames) throws InterruptedException {
     List<WebElement> switchTextboxes = getSwitchTextboxes();
     
     System.out.println("Switchtextboxes sizes: "+switchTextboxes.size() );

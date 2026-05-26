@@ -30,6 +30,10 @@ public class SwitchPage extends GenericWrappers{
 
 	@FindBy(xpath = "//*[@resource-id='Header_MenuButton']")
 	private WebElement menuButton;
+	
+	@FindBy(xpath = "//*[@resource-id='HeaderComponent_OpenMenu_Button']")
+	private WebElement NewMenuButton;
+
 	@FindBy(xpath = "//*[@resource-id='Single_Button']")
 	private WebElement okButton;
 
@@ -52,6 +56,10 @@ public class SwitchPage extends GenericWrappers{
 	@FindBy(xpath = "//*[@resource-id='MenuItem_Settings_0']")
 	private WebElement settingsButton;
 	
+	@FindBy(xpath = "//*[@resource-id='HeaderComponent_Button4']")
+	private WebElement newSettingsButton;
+	
+	
 	@FindBy(xpath = "//*[@resource-id='SettingsItem_ResetDevice']")
 	private WebElement resetDeviceButton;
 	
@@ -72,6 +80,10 @@ public class SwitchPage extends GenericWrappers{
 	
 	@FindBy(xpath = "//*[@resource-id='DisconnectedBadge_1']")
 	private WebElement disconnectedIcon;
+	
+	@FindBy(xpath = "//*[@resource-id='HeaderComponent_Button1']")
+	private WebElement switchPageBackButton;
+	
 	
 	
 	//doing
@@ -95,8 +107,8 @@ public class SwitchPage extends GenericWrappers{
 	private  WebElement SwitchLock_AppTab;
 	@FindBy(xpath = "//*[@resource-id='AppSwitchLockON_OFF_Switch']")
 	private WebElement AppSwitchLockON_OFF_toggle;
-//	@FindBy(xpath = "//*[@resource-id='']")
-//	private WebElement ;
+	@FindBy(xpath = "//*[@resource-id='panel-item-0']")
+	private WebElement selectPanel ;
 //	@FindBy(xpath = "//*[@resource-id='']")
 //	private WebElement ;
 //	@FindBy(xpath = "//*[@resource-id='']")
@@ -123,16 +135,28 @@ public class SwitchPage extends GenericWrappers{
 	public void clickRemoveSwitchBoardOption() {
 		clickbyXpath(removeSwitchBoardOption, "Click on Remove Button");
 	}
+	
+	public void clickSwitchPageBackButton() {
+		clickbyXpath(switchPageBackButton, "Click on Remove Button");
+	}
+	
 	public void clickOkButton() {
 		if (isElementDisplayedCheck(okButton)) {
 			clickbyXpath(okButton, "Pop-up Ok button");
 		}
 	}
 	
+	public void clickSelectPanelbutton() {
+		clickbyXpath(selectPanel, "Click on Select Panel Button");
+	}
+	
 	public void clickMenuButton() {
 		clickbyXpath(menuButton, "Click on Menu Button");
 	}
 	
+	public void clickNewMenuButton() {
+		clickbyXpath(NewMenuButton, "Click on Menu Button");
+	}
 	public void clickSwitchboardmenuButton(int switches) {
 		clickbyXpath(SwitchBoardMenu(switches), "Switchboardmenu");
 	}
@@ -195,6 +219,11 @@ public class SwitchPage extends GenericWrappers{
 	public void clickSettingsButton() {
 		clickbyXpath(settingsButton, "Click On settings Button");
 	}
+	
+	public void clickNewSettingsButton() {
+		clickbyXpath(newSettingsButton, "Click On settings Button");
+	}
+	
 	
 	public void clickResetDeviceButton() {
 		clickbyXpath(resetDeviceButton, "Click On Reset Device Button");

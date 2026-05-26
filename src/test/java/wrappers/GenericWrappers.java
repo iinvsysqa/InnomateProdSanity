@@ -30,8 +30,10 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -422,7 +424,7 @@ public class GenericWrappers {
 		boolean bReturn = false;
 		try {
 
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(seconds));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
 			wait.pollingEvery(Duration.ofMillis(500));
 			wait.ignoring(NoSuchElementException.class);
 			wait.ignoring(StaleElementReferenceException.class);
@@ -1399,7 +1401,39 @@ public class GenericWrappers {
 	
 	
 	
-	
+	 public void selectDropdownByIndex(WebElement element, int optionIndex) throws InterruptedException {
+
+	        // Step 1: Tap the dropdown container by coordinates (bypasses clickable=false)
+	        Rectangle rect = element.getRect();
+	        int dropdownCenterX = rect.getX() + (rect.getWidth() / 2);
+	        int dropdownCenterY = rect.getY() + (rect.getHeight() / 2);
+	        
+	        Map<String, Object> openParams = new HashMap<>();
+	        openParams.put("x", dropdownCenterX);
+	        openParams.put("y", dropdownCenterY);
+	        ((JavascriptExecutor) driver).executeScript("mobile: clickGesture", openParams);
+	        
+	        System.out.println("Opened dropdown by tapping: x=" + dropdownCenterX + ", y=" + dropdownCenterY);
+
+	        // Step 2: Wait for animation
+	        Thread.sleep(800);
+
+	        // Step 3: Get fresh coordinates (in case anything shifted)
+	        Rectangle freshRect = element.getRect();
+	        int itemHeight = freshRect.getHeight();
+	        int x = freshRect.getX() + (freshRect.getWidth() / 2);
+	        int y = freshRect.getY() + freshRect.getHeight() + (itemHeight * optionIndex) - (itemHeight / 2);
+
+	       //System.out.println("Tapping option " + optionIndex + " at: x=" + x + ", y=" + y);
+
+	        // Step 4: Tap the option
+	        Map<String, Object> tapParams = new HashMap<>();
+	        tapParams.put("x", x);
+	        tapParams.put("y", y);
+	        ((JavascriptExecutor) driver).executeScript("mobile: clickGesture", tapParams);
+
+	    }
+
 	
 	
 //		public void verifyToastByImage() throws Exception {

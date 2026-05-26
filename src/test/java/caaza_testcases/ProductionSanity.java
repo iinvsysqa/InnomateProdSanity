@@ -2,10 +2,6 @@ package caaza_testcases;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.openqa.selenium.By;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,16 +10,16 @@ import pages.AddDevicePage;
 import pages.DeviceMenuPage;
 import pages.HomePage;
 import pages.LandingPage;
+import pages.LinkDevicesPage;
 import pages.OtpPage;
 import pages.SettingsPage;
 import pages.SignUpPage;
 import pages.StoreLogPage;
 import pages.SwitchPage;
 import utils.logReadandWrite;
-import utils.serialnumberExcelupdate;
 import wrappers.MobileAppWrappers;
 
-public class ProductionSanity_Testclass extends MobileAppWrappers {
+public class ProductionSanity extends MobileAppWrappers {
 
 	LandingPage landingpage;
 	SignUpPage signuppage;
@@ -35,6 +31,7 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 	StoreLogPage logpage;
 	AddDevicePage adddevicepage;
 	SwitchPage switchpage;
+	LinkDevicesPage linkdevicespage;
 	int enterNode;
 	String fetchSerailnumber_Dual_Threenode;
 
@@ -60,6 +57,7 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 		homepage = new HomePage(driver);
 		adddevicepage = new AddDevicePage(driver);
 		switchpage = new SwitchPage(driver);
+		linkdevicespage= new LinkDevicesPage(driver);
 
 		logReadandWrite readwrite = logReadandWrite.getInstance(loadProp("COM"));
 		try {
@@ -69,23 +67,39 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 //			landingpage.enterUserName("Demouserauto");
 //			landingpage.enterPassword("Welcome@123");
 //			landingpage.clickSignInButton();
-			homepage.clickFloorSelctionBtn();
+			homepage.clickStartPairingButton();
+			
+			
+			
+			//homepage.clickFloorSelctionBtn();
 			adddevicepage.pair(2);
 			enterNode = adddevicepage.EnterNode(switchNames);
-			homepage.clickFloorSelctionBtn();
-
-			homepage.clickPanel(0);
+			
+			//homepage.clickFloorSelctionBtn();
+			
+			linkdevicespage.clickUnlikeDeviceCheckBox();
+			linkdevicespage.clickAssignButton();
+			linkdevicespage.clickDropDown();
+			linkdevicespage.selectHierachy(1);
+			//linkdevicespage.selectApartmentByIndex(1);
+			linkdevicespage.selectApartmentByIndex(1);
+			linkdevicespage.clickAssignDeviceConfirmButton();
+			driver.navigate().back();
+			homepage.clickApartmentIcon();
+			switchpage.clickSelectPanelbutton();
+			switchpage.clickSwitchPageBackButton();
+			switchpage.clickSelectPanelbutton();
+			//homepage.clickPanel(0);
 			Thread.sleep(2000);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
 			switchpage.ThreenodeclickOnOffButton(enterNode);
 
 			fetchSerailnumber_Dual_Threenode = switchpage.FetchSerailnumber_SingleNode();// newly added
 
-			switchpage.clickMenuButton();
-			switchpage.clickSettingsButton();
+			switchpage.clickNewMenuButton();
+			switchpage.clickNewSettingsButton();
 			switchpage.clickResetDeviceButton();
 			switchpage.clickResetConfirmationButton();
-			driver.navigate().back();
 			driver.navigate().back();
 			// switchpage.clickBackButton();
 
@@ -100,8 +114,8 @@ public class ProductionSanity_Testclass extends MobileAppWrappers {
 
 //			readwrite.closePort();
 		} catch (Exception e) {
-			readwrite.closePort();
-			logpage.CollectLogOnFailure(testCaseName, testDescription);
+			//readwrite.closePort();
+			//logpage.CollectLogOnFailure(testCaseName, testDescription);
 			fail(e);
 		}
 	}
