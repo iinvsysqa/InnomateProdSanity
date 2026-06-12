@@ -10,7 +10,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Rectangle;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import io.appium.java_client.android.AndroidDriver;
 import utils.Reporter;
 import wrappers.GenericWrappers;
@@ -84,7 +92,11 @@ public class SwitchPage extends GenericWrappers{
 	@FindBy(xpath = "//*[@resource-id='HeaderComponent_Button1']")
 	private WebElement switchPageBackButton;
 	
-	
+	@FindBy(xpath = "//*[@resource-id='SaveButton']")
+	private WebElement saveButton;
+
+	@FindBy(xpath = "//*[@resource-id='DeviceCard_1']")
+	private WebElement deviceCard;
 	
 	//doing
 	@FindBy(xpath = "//*[@resource-id='MenuItem_AddandEditSwitchboard_0']")
@@ -109,6 +121,18 @@ public class SwitchPage extends GenericWrappers{
 	private WebElement AppSwitchLockON_OFF_toggle;
 	@FindBy(xpath = "//*[@resource-id='panel-item-0']")
 	private WebElement selectPanel ;
+	
+	@FindBy(xpath = "//*[@resource-id='RoomImageBackground']")
+	private WebElement temperatureSensorCard ;
+	
+	@FindBy(xpath = "//*[@resource-id='SettingsItem_Real-timeMonitor']")
+	private WebElement energyMonitoringButton ;
+	
+	@FindBy(xpath = "//android.widget.TextView[@text=\"Real-time monitoring\"]/following-sibling::android.view.ViewGroup")
+	private WebElement energyMonitoringToggle;
+	
+	
+	
 //	@FindBy(xpath = "//*[@resource-id='']")
 //	private WebElement ;
 //	@FindBy(xpath = "//*[@resource-id='']")
@@ -130,7 +154,13 @@ public class SwitchPage extends GenericWrappers{
 		
 	}
 	
+	public void clickSaveButton() {
+		clickbyXpath(saveButton, "Click on Save Button");
+	}
 	
+	public void clickDeviceCard() {
+		clickbyXpath(deviceCard, "Click on devcie card");
+	}
 	
 	public void clickRemoveSwitchBoardOption() {
 		clickbyXpath(removeSwitchBoardOption, "Click on Remove Button");
@@ -157,6 +187,17 @@ public class SwitchPage extends GenericWrappers{
 	public void clickNewMenuButton() {
 		clickbyXpath(NewMenuButton, "Click on Menu Button");
 	}
+	
+	public void clickEnergyMonitoringButton() {
+		clickbyXpath(energyMonitoringButton, "Click on Energy monitoring Button");
+	}
+	
+	public void clickEnergyMonitoringToggleButton() {
+		clickbyXpath(energyMonitoringToggle, "Click on Energy monitoring Toggle Button");
+	}
+	
+	
+	
 	public void clickSwitchboardmenuButton(int switches) {
 		clickbyXpath(SwitchBoardMenu(switches), "Switchboardmenu");
 	}
@@ -365,5 +406,41 @@ public class SwitchPage extends GenericWrappers{
 	}
 	public   void clickAppSwitchlockToggle() {
 		clickbyXpath(AppSwitchLockON_OFF_toggle, "Appswitchlock On/off toggle");
+	}
+	
+	
+	public void temperatureSensorCheck() throws IOException, TesseractException {
+		// 1. Get the bounds of the card (use the RoomImageBackground you already have)
+		try {
+		    // 1. Get the bounds of the card
+		    Rectangle rect = temperatureSensorCard.getRect();
+
+		    // 2. Screenshot and crop
+		    File screenshot = driver.getScreenshotAs(OutputType.FILE);
+		    BufferedImage fullImg = ImageIO.read(screenshot);
+		    BufferedImage cardImg = fullImg.getSubimage(
+		        rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+		    File cropped = new File("temp_card.png");
+		    ImageIO.write(cardImg, "png", cropped);
+
+		    // 3. OCR with Tess4J
+		    ITesseract tesseract = new Tesseract();
+		    tesseract.setDatapath(System.getProperty("user.dir") + "/tessdata");
+		    tesseract.setLanguage("eng");
+		    String ocrText = tesseract.doOCR(cropped).trim();
+
+		    // 4. Validate with if-condition
+		    boolean hasRealTemp = ocrText.matches("(?s).*\\d+(\\.\\d+)?\\s*°?C.*");
+		    boolean hasPlaceholder = ocrText.contains("--");
+
+		    if (hasRealTemp && !hasPlaceholder) {
+		        Reporter.reportStep("Temperature Sensor value displayed correctly. OCR read: " + ocrText, "PASS");
+		    } else {
+		        Reporter.reportStep("Temperature sesnor not found on card. OCR read: " + ocrText, "FAIL&RUN");
+		    }
+
+		} catch (Exception e) {
+		    Reporter.reportStep("Card element 'RoomImageBackground' not found on screen", "FAIL&RUN");
+		}
 	}
 }
