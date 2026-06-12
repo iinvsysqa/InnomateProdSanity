@@ -254,7 +254,7 @@ public class GenericWrappers {
 			bReturn = true;
 
 		} catch (Exception e) {
-			Reporter.reportStep("The Field " + button + " could not be clicked.", "FAIL");
+			Reporter.reportStep("The Field " + button + " could not be clicked.:Exception:"+e, "FAIL");
 		}
 		return bReturn;
 
@@ -700,22 +700,17 @@ public class GenericWrappers {
 	}
 
 	// Helper method to check if the element is displayed
-	public boolean isElementDisplayed(WebElement element, String Field) {
-		try {
-			expWaitTillElementDisplay(element, 10);// Introduce a small delay before checking visibility
+	public boolean isElementDisplayed(WebElement element, String field) {
 
-			if (element.isDisplayed()) {
+	    boolean displayed = expWaitTillElementDisplay(element, 10);
 
-				Reporter.reportStep(Field + "  Element displayed", "PASS");
-			} else {
-				Reporter.reportStep(Field + "Element not displayed", "FAIL");
+	    if (displayed) {
+	        Reporter.reportStep(field + " Element displayed", "PASS");
+	    } else {
+	        Reporter.reportStep(field + " Element not displayed", "INFO");
+	    }
 
-			}
-			return true;
-		} catch (NoSuchElementException e) {
-			Reporter.reportStep(Field + "Element not displayed", "FAIL");
-			return false;
-		}
+	    return displayed;
 	}
 
 	public boolean isElementDisplayednext(WebElement element, String Field) {

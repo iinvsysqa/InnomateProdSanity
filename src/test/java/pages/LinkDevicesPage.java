@@ -36,8 +36,11 @@ public class LinkDevicesPage extends MobileAppWrappers {
 		private WebElement dropDownbuttonContainer;
 		
 		//@FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"Select Apartment\"]")
-		@FindBy(xpath = "//android.view.ViewGroup[@resource-id='drop_down_comp_Container']/android.widget.TextView")
+		@FindBy(xpath = "//android.view.ViewGroup[@resource-id='drop_down_comp_view']")
 		private WebElement dropDownbutton;
+		
+		@FindBy(xpath = "//*[@resource-id='drop_down_comp_Container_0']")
+		private WebElement selectFirstApartment;
 		
 		@FindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_allow_all_button\"]")
 		private WebElement Clickallowall;
@@ -50,6 +53,11 @@ public class LinkDevicesPage extends MobileAppWrappers {
 		
 		@FindBy(xpath = "//*[@resource-id='UnlinkedDevice_Button7']")
 		private WebElement assignDeviceConfirmButton;
+		
+		@FindBy(xpath = "//*[@resource-id='Single_Button']")
+		private WebElement resetConfirmationOkButton;
+		
+		
 
 		private AndroidDriver driver;
 		
@@ -76,6 +84,11 @@ public class LinkDevicesPage extends MobileAppWrappers {
 				clickbyXpath(dropDownbutton, " Click Hierachy select drop down ");
 			}
 			
+			public void selectFirstApartment() {	
+				clickbyXpath(selectFirstApartment, " Select first drop down hierarchy ");
+			}
+			
+			
 			public void selectHierachy(int index) throws InterruptedException {
 				selectDropdownByIndex(dropDownbuttonContainer, index);
 			}
@@ -85,7 +98,9 @@ public class LinkDevicesPage extends MobileAppWrappers {
 			}
 			
 			
-			
+			public void clickResetConfirmationOkButton() {
+				clickbyXpath(resetConfirmationOkButton, "Ok Button on reset");
+			}
 		
 			
 			public void Clickallowall() {	

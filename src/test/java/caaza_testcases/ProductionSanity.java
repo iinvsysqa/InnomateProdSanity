@@ -80,9 +80,9 @@ public class ProductionSanity extends MobileAppWrappers {
 			linkdevicespage.clickUnlikeDeviceCheckBox();
 			linkdevicespage.clickAssignButton();
 			linkdevicespage.clickDropDown();
-			linkdevicespage.selectHierachy(1);
+			//linkdevicespage.selectHierachy(1);
+			linkdevicespage.selectFirstApartment();
 			//linkdevicespage.selectApartmentByIndex(1);
-			linkdevicespage.selectApartmentByIndex(1);
 			linkdevicespage.clickAssignDeviceConfirmButton();
 			driver.navigate().back();
 			homepage.clickApartmentIcon();
@@ -100,11 +100,12 @@ public class ProductionSanity extends MobileAppWrappers {
 			switchpage.clickNewSettingsButton();
 			switchpage.clickResetDeviceButton();
 			switchpage.clickResetConfirmationButton();
+			linkdevicespage.clickResetConfirmationOkButton();
 			driver.navigate().back();
 			// switchpage.clickBackButton();
 
 			if (enterNode == 1) {
-				nodetype = "SingleNode";
+				nodetype = "SingleNode/15A Device";
 			} else if (enterNode == 2) {
 				nodetype = "DualNode";
 			} else if (enterNode == 3) {

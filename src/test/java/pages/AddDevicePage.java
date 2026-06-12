@@ -182,6 +182,24 @@ public class AddDevicePage extends GenericWrappers {
 
 	@FindBy(xpath = "//*[@resource-id='Add_Device_Capacity_Input']")
 	private WebElement Capacity;
+	
+	@FindBy(xpath = "//*[@resource-id='AddSwitch_Header']")
+	private WebElement addSwitchHeader;
+	
+	@FindBy(xpath = "//*[@resource-id='drop_down_comp_view']")
+	private WebElement brandNameDropDown;
+	
+	@FindBy(xpath = "//*[@resource-id='drop_down_comp_Container_0']")
+	private WebElement brandNameOption1;
+	
+	@FindBy(xpath = "//*[@resource-id='AddSwitchComp_EnterModelName_Input']")
+	private WebElement modelNameTextBox;
+	
+	@FindBy(xpath = "//*[@resource-id='AddSwitchComp_Input6']")
+	private WebElement capacityTextBox;
+	
+	@FindBy(xpath = "//*[@resource-id='AddSwitchComp_Submit_Button']")
+	private WebElement addSwitchPageSaveButton;
 
 	@FindBy(xpath = "//android.widget.TextView[@text=\"Select room size\"]")
 	private WebElement RoomSizeselect;
@@ -315,6 +333,13 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='Single_Button']")
 	private WebElement panelNameSaveBtn;
 //	@FindBy(xpath = "(//android.widget.TextView[@text=\"Save\"])[2]")
+	
+	
+	@FindBy(xpath = "//android.widget.TextView[@text=\"SmAmp Max Device Name\"]")
+	private WebElement smAmapMaxText;
+	
+	@FindBy(xpath = "//*[@resource-id='AddSwitch_FlatList']")
+	private WebElement addSwitchNameContainer;
 	
 	@FindBy(xpath = "//android.widget.EditText[@text=\"Enter Switch Name\"]")
 	private WebElement switchNameTextBox;
@@ -1207,18 +1232,35 @@ public void TurnOffmobiledata() throws Exception {
  // Add names for the switches
 
 public int  EnterNode(List<String> switchNames) throws InterruptedException {
-	
+	int setupSwitches;
 	waitForVerificationComplete();
 	enterPanelNameNew("Panel1");
 	clickbyXpath(panelNameSaveBtn, "PanelNamesave");
 	//singlenode-1switch
 //		 enterSwitchName("Switch1");
-		 int setupSwitches = setupSwitches(switchNames);
-		 clickAddswitchSaveBtn();
-		 clickOkButton();
+	if(isElementDisplayed(addSwitchNameContainer, "Add Switch Name Container")) {
+		setupSwitches = setupSwitches(switchNames);
+		clickAddswitchSaveBtn();
+		clickOkButton();
+		return setupSwitches;
+	}
+	else { 
+			if(isElementDisplayed(smAmapMaxText,"smAmp Max Placeholder text")) {
+			clickbyXpath(addSwitchPageSaveButton, "Add switch page save button");
+			clickOkButton();
+			return 1;
+			}
+			else {
+			clickbyXpath(brandNameDropDown, "Brand name dropdown");
+			clickbyXpath(brandNameOption1, "Select Brand first option");
+			entervaluebyXpath(modelNameTextBox, "Model Name", "Demo");
+			entervaluebyXpath(capacityTextBox, "Capacity", "1");
+			clickbyXpath(addSwitchPageSaveButton, "Add switch page save button");
+			clickOkButton();
+			return 1;
+		}
+		}
 
-		 return setupSwitches;
-		
 }
 
 
