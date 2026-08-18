@@ -52,6 +52,8 @@ public class serialnumberExcelupdate {
                     nodeCol = cell.getColumnIndex();
                 } else if (val.contains("status")) {
                     statusCol = cell.getColumnIndex();
+                } else if (val.contains("Temp_Status")) {
+                	statusCol = cell.getColumnIndex();
                 }
             }
 

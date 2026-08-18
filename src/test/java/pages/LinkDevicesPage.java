@@ -54,7 +54,7 @@ public class LinkDevicesPage extends MobileAppWrappers {
 		@FindBy(xpath = "//*[@resource-id='UnlinkedDevice_Button7']")
 		private WebElement assignDeviceConfirmButton;
 		
-		@FindBy(xpath = "//*[@resource-id='Single_Button']")
+		@FindBy(xpath = "//*[@resource-id='SingleButton_Button']")
 		private WebElement resetConfirmationOkButton;
 		
 		

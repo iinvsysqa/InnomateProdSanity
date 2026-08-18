@@ -330,7 +330,7 @@ public class AddDevicePage extends GenericWrappers {
 	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='AddSwitch_SaveButton']")
 	private WebElement addSwitchSaveBtn;
 	
-	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='Single_Button']")
+	@FindBy(xpath = "//android.view.ViewGroup[@resource-id='SingleButton_Button']")
 	private WebElement panelNameSaveBtn;
 //	@FindBy(xpath = "(//android.widget.TextView[@text=\"Save\"])[2]")
 	
@@ -397,7 +397,7 @@ public class AddDevicePage extends GenericWrappers {
 	}
 	
 	public void clickPairingSubmitButton() {
-		clickbyXpath(PairingSubmitButton, " Click on Submit Button ");
+		clickbyXpath(submitBtn, " Click on Submit Button ");
 	}
 	
 	public void clickSwitchTypeDropdown() {

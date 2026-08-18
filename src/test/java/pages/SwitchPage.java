@@ -409,7 +409,7 @@ public class SwitchPage extends GenericWrappers{
 	}
 	
 	
-	public void temperatureSensorCheck() throws IOException, TesseractException {
+	public boolean temperatureSensorCheck() throws IOException, TesseractException {
 		// 1. Get the bounds of the card (use the RoomImageBackground you already have)
 		try {
 		    // 1. Get the bounds of the card
@@ -435,12 +435,16 @@ public class SwitchPage extends GenericWrappers{
 
 		    if (hasRealTemp && !hasPlaceholder) {
 		        Reporter.reportStep("Temperature Sensor value displayed correctly. OCR read: " + ocrText, "PASS");
+		        return true;
 		    } else {
 		        Reporter.reportStep("Temperature sesnor not found on card. OCR read: " + ocrText, "FAIL&RUN");
+		        return false;
 		    }
 
 		} catch (Exception e) {
 		    Reporter.reportStep("Card element 'RoomImageBackground' not found on screen", "FAIL&RUN");
+		    return false;
 		}
+		
 	}
 }

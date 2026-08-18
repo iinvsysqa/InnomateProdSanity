@@ -103,7 +103,7 @@ public class ProductionSanity_sZphyer extends MobileAppWrappers {
 			switchpage.clickSaveButton();
 			driver.navigate().back();
 			switchpage.clickDeviceCard();
-			switchpage.temperatureSensorCheck();
+			boolean tempSensor=switchpage.temperatureSensorCheck();
 			driver.navigate().back();
 			switchpage.clickNewMenuButton();
 			switchpage.clickNewSettingsButton();
