@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import org.openqa.selenium.logging.profiler.HttpProfilerLogEntry;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

@@ -84,7 +84,7 @@ public class ProductionSanity extends MobileAppWrappers {
 			linkdevicespage.selectFirstApartment();
 			//linkdevicespage.selectApartmentByIndex(1);
 			linkdevicespage.clickAssignDeviceConfirmButton();
-			driver.navigate().back();
+			switchpage.clickSwitchPageBackButton();
 			homepage.clickApartmentIcon();
 			switchpage.clickSelectPanelbutton();
 			switchpage.clickSwitchPageBackButton();
@@ -101,7 +101,7 @@ public class ProductionSanity extends MobileAppWrappers {
 			switchpage.clickResetDeviceButton();
 			switchpage.clickResetConfirmationButton();
 			linkdevicespage.clickResetConfirmationOkButton();
-			driver.navigate().back();
+			switchpage.clickSwitchPageBackButton();
 			// switchpage.clickBackButton();
 
 			if (enterNode == 1) {
